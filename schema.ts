@@ -12,16 +12,17 @@ export default defineSchema(
             status: v.optional(v.string()),
             slug: v.optional(v.string()),
             users: v.optional(v.array(v.object({
-                id: v.string(),
-                user: v.id("users"),
-                inviterUser: v.id("users"),
-                email: v.string(),
-                requestAccess: v.boolean(),
-                board: v.id("boards"),
-                status: v.optional(v.string()),
+                id: v.optional(v.string()),
+                user: v.optional(v.id("users")),
+                inviterUser: v.optional(v.id("users")),
+                email: v.optional(v.string()),
+                requestAccess: v.optional(v.boolean()),
+                board: v.optional(v.id("boards")),
+                status: v.optional(v.optional(v.string())),
                 createdAt: v.string(),
                 updatedAt: v.string()
             }))),
+            updatedAt: v.optional(v.string()),
         }),
 
         // Declaration for note

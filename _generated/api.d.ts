@@ -16,6 +16,7 @@ import type {
 } from "convex/server";
 import type * as backend_subscriptions_subscriptions from "../backend/subscriptions/subscriptions.js";
 import type * as backend_users_users from "../backend/users/users.js";
+import type * as backend_workspace_workspace from "../backend/workspace/workspace.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -28,6 +29,7 @@ import type * as backend_users_users from "../backend/users/users.js";
 declare const fullApi: ApiFromModules<{
   "backend/subscriptions/subscriptions": typeof backend_subscriptions_subscriptions;
   "backend/users/users": typeof backend_users_users;
+  "backend/workspace/workspace": typeof backend_workspace_workspace;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
