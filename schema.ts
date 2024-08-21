@@ -566,7 +566,8 @@ export default defineSchema(
                 accountCalendarAccess: v.string(),
                 accountAccessedFrom: v.string(),
             }))),
-            lastWorkspace: v.optional(v.id("workspaces"))
+            lastWorkspace: v.optional(v.id("workspaces")),
+            updatedAt: v.optional(v.string())
         }),
     },
     {
