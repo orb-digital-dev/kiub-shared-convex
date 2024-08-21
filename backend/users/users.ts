@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { queryGeneric, mutationGeneric, DefaultFunctionArgs } from "convex/server";
 import { v } from "convex/values";
-import { NonDocumentUser } from "src/types/user.types";
 
 export const getUsers = queryGeneric({
   args: {},
@@ -10,22 +9,33 @@ export const getUsers = queryGeneric({
   },
 });
 
-export const getUser = queryGeneric({
+export const getUserById = queryGeneric({
   args: {id: v.id("users")},
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);
   },
 });
 
+export const getUserByPrimaryEmail = queryGeneric({
+  args: {primaryEmail: v.string()},
+  handler: async (ctx, args) => {
+    return await ctx.db.query("users").filter(q => q.eq(q.field("primaryEmail"), args.primaryEmail)).first();
+  },
+});
+
 export const updateOrCreateUser = mutationGeneric({
+  // args: {primaryEmail: v.string()},
   handler: async (ctx, args) => {
     const user = await ctx.db.query("users").filter(e => e.eq(e.field("primaryEmail"), args?.primaryEmail)).first();
     if(user){
       delete args?.primaryEmail;
-      await ctx.db.patch(user?._id, args);
+      await ctx.db.patch(user?._id, {
+        updatedAt: (new Date()).toISOString(),
+        ...args,
+      });
       return await ctx.db.get(user?._id);
     }
-    return await ctx.db.insert("users", {
+    const _id = await ctx.db.insert("users", {
       storageUsed: 0,
       callMinuteUsed: 0,
       callMinuteOverAll: 0,
@@ -67,7 +77,10 @@ export const updateOrCreateUser = mutationGeneric({
       },
       hasSignedGoogle: false,
       hasSignedMicrosoft: false,
+      updatedAt: (new Date()).toISOString(),
       ...args,
     });
+
+    return await ctx.db.get(_id);
   },
 });

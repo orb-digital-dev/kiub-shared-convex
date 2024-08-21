@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as backend_subscriptions_subscriptions from "../backend/subscriptions/subscriptions.js";
 import type * as backend_users_users from "../backend/users/users.js";
 
 /**
@@ -25,6 +26,7 @@ import type * as backend_users_users from "../backend/users/users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  "backend/subscriptions/subscriptions": typeof backend_subscriptions_subscriptions;
   "backend/users/users": typeof backend_users_users;
 }>;
 export declare const api: FilterApi<
