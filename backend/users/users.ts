@@ -28,10 +28,19 @@ export const updateOrCreateUser = mutationGeneric({
   handler: async (ctx, args) => {
     const user = await ctx.db.query("users").filter(e => e.eq(e.field("primaryEmail"), args?.primaryEmail)).first();
     if(user){
-      delete args?.primaryEmail;
+      
+      let __value = args;
+      delete __value.primaryEmail;
+      delete __value._creationTime;
+      delete __value._id;
+
+      if(typeof(__value?.lastWorkspace) != "string"){
+        delete __value.lastWorkspace;
+      }
+
       await ctx.db.patch(user?._id, {
         updatedAt: (new Date()).toISOString(),
-        ...args,
+        ...__value,
       });
       return await ctx.db.get(user?._id);
     }
@@ -39,6 +48,10 @@ export const updateOrCreateUser = mutationGeneric({
       storageUsed: 0,
       callMinuteUsed: 0,
       callMinuteOverAll: 0,
+      country: {
+        name: "",
+        code: "",
+      },
       lastCallTimeRefresh: (new Date()).toISOString(),
       lastBoardId: 'unsorted',
       accountType: 'Individual',
@@ -75,6 +88,7 @@ export const updateOrCreateUser = mutationGeneric({
           id: "unsorted",
         },
       },
+      hasPlannedToday: false,
       hasSignedGoogle: false,
       hasSignedMicrosoft: false,
       updatedAt: (new Date()).toISOString(),

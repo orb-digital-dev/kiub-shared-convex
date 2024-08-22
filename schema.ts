@@ -18,10 +18,21 @@ export default defineSchema(
                 email: v.optional(v.string()),
                 requestAccess: v.optional(v.boolean()),
                 board: v.optional(v.id("boards")),
+                role: v.optional(v.string()),
                 status: v.optional(v.optional(v.string())),
-                createdAt: v.string(),
-                updatedAt: v.string()
+                createdAt: v.optional(v.string()),
+                updatedAt: v.optional(v.string())
             }))),
+            updatedAt: v.optional(v.string()),
+        }),
+
+        // Declaration for savedCalendar
+        savedCalendars: defineTable({
+            accountProvider: v.optional(v.string()),
+            accountEmail: v.optional(v.string()),
+            accountEmailId: v.optional(v.string()),
+            accountId: v.optional(v.string()),
+            accountCalendarAccess: v.optional(v.boolean()),
             updatedAt: v.optional(v.string()),
         }),
 
@@ -177,8 +188,8 @@ export default defineSchema(
                 role: v.string(),
                 status: v.string(),
                 requestAccess: v.boolean(),
-                createdAt: v.string(),
-                updatedAt: v.string()
+                createdAt: v.optional(v.string()),
+                updatedAt: v.optional(v.string())
             }))),
         }),
 
@@ -493,8 +504,8 @@ export default defineSchema(
             actionOtp: v.optional(v.string()),
             weekStartDay: v.optional(v.string()),
             country: v.optional(v.object({
-                name: v.string(),
-                code: v.string(),
+                name: v.any(),
+                code: v.any(),
             })),
             autoUpdateTimezone: v.optional(v.boolean()),
             timeFormat: v.optional(v.string()),
