@@ -19,6 +19,7 @@ import type * as backend_subscriptions_usersubscriptions from "../backend/subscr
 import type * as backend_users_savedcalendars from "../backend/users/savedcalendars.js";
 import type * as backend_users_users from "../backend/users/users.js";
 import type * as backend_workspace_boards from "../backend/workspace/boards.js";
+import type * as backend_workspace_lists from "../backend/workspace/lists.js";
 import type * as backend_workspace_tempshareds from "../backend/workspace/tempshareds.js";
 import type * as backend_workspace_workspace from "../backend/workspace/workspace.js";
 
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   "backend/users/savedcalendars": typeof backend_users_savedcalendars;
   "backend/users/users": typeof backend_users_users;
   "backend/workspace/boards": typeof backend_workspace_boards;
+  "backend/workspace/lists": typeof backend_workspace_lists;
   "backend/workspace/tempshareds": typeof backend_workspace_tempshareds;
   "backend/workspace/workspace": typeof backend_workspace_workspace;
 }>;
