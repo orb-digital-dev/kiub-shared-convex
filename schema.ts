@@ -214,13 +214,14 @@ export default defineSchema(
 
         // Declaration for userSubscriptions
         userSubscriptions: defineTable({
-            uuid: v.string(),
-            subscription: v.id("subscriptions"),
-            user: v.id("users"),
-            status: v.string(),
-            durationCycle: v.number(),
-            amountPaid: v.number(),
-            payment: v.id("payments"),
+            uuid: v.optional(v.string()),
+            subscription: v.optional(v.id("subscriptions")),
+            user: v.optional(v.id("users")),
+            status: v.optional(v.string()),
+            durationCycle: v.optional(v.number()),
+            amountPaid: v.optional(v.number()),
+            payment: v.optional(v.id("payments")),
+            updatedAt: v.optional(v.string()),
         }),
 
         // Declaration for payments
@@ -484,6 +485,7 @@ export default defineSchema(
                 dateLastSubscribed: v.optional(v.string()),
                 billingCircle: v.optional(v.number()),
                 dateforAction: v.optional(v.string()),
+                defaultPaymentMethodId: v.optional(v.string()),
             })),
             stripe: v.optional(v.object({
                 hasAccount: v.boolean(), 
