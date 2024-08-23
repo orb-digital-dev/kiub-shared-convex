@@ -9,6 +9,13 @@ export const getAllSubscriptions = queryGeneric({
   },
 });
 
+export const getSubscriptionByKey = queryGeneric({
+  args: {key: v.string()},
+  handler: async (ctx, args) => {
+    return await ctx.db.query("subscriptions").filter(q => q.eq(q.field('key'), args?.key)).first();
+  },
+});
+
 export const getSubscription = queryGeneric({
   args: {id: v.id("subscriptions")},
   handler: async (ctx, args) => {
