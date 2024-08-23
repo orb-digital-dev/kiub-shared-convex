@@ -19,7 +19,7 @@ export const getBoard = queryGeneric({
 export const getBoardsFromWorkspaceWithUserPopulated = queryGeneric({
     args: {workspaceId: v.id("workspaces")},
     handler: async (ctx, args) => {
-      let boards = await ctx.db.query("boards").collect();
+      let boards = await ctx.db.query("boards").filter(q => q.eq(q.field("workspace"), args?.workspaceId)).collect();
 
       for (let i = 0; i < boards.users.length; i++) {
           const element = boards.users[i];
@@ -30,6 +30,14 @@ export const getBoardsFromWorkspaceWithUserPopulated = queryGeneric({
           };
       }
   
+      return boards;
+    },
+});
+
+export const getBoardsFromWorkspace = queryGeneric({
+    args: {workspaceId: v.id("workspaces")},
+    handler: async (ctx, args) => {
+      let boards = await ctx.db.query("boards").filter(q => q.eq(q.field("workspace"), args?.workspaceId)).collect(); 
       return boards;
     },
   });
